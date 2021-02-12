@@ -10,6 +10,7 @@ import { AppStore } from './store/AppStore';
 //import '@babel/polyfill'
 import 'react-app-polyfill/ie11';
 import HttpsRedirect from 'react-https-redirect';
+import './styles/reduction.scss';
 
 const Main = props => (
   <div>

@@ -15,7 +15,7 @@ class CustomeServices {
     }
 
     exportCompanyData(id) {
-        return axios.get("http://localhost:8081/download");
+        return axios.get("http://localhost:8081/export");
     }
 
     DeleteCompanyById(id) {

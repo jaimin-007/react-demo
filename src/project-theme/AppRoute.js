@@ -4,9 +4,9 @@ import Login from "./components/Login";
 import Company from "./components/Company";
 import AddEditCompany from "./components/AddEditCompany";
 export default {
-    Login: {
+    Home: {
         component: Login,
-        path: ''
+        path: '/'
     },
     ForgotPassword: {
         component: ForgotPassword,

@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import _ from 'lodash';
 import { withLocalize } from "react-localize-redux";
 import { EmptyLayout, LayoutRoute, MainLayout } from '../components/Layout';
+import ForgotPassword from './components/ForgotPassword';
 
 
 class Main extends Component {
@@ -18,6 +19,31 @@ class Main extends Component {
         return (
             <BrowserRouter>
                 <Switch>
+                <LayoutRoute
+              exact
+              path="/Login"
+              layout={EmptyLayout}
+              component={props => (
+                <Login />
+              )}
+            ></LayoutRoute>
+             <LayoutRoute
+              exact
+              path="/"
+              layout={EmptyLayout}
+              component={props => (
+                <Login />
+              )}
+            ></LayoutRoute>
+            <LayoutRoute exact
+              path="/forgotPassword"
+              layout={EmptyLayout}
+              component={props => (
+                <ForgotPassword />
+              )}>
+                
+            </LayoutRoute>
+                <MainLayout breakpoint={this.props.breakpoint}>
                     {_.map(AppRoute, (route, key) => {
                         const { component, path } = route;
                         return (
@@ -29,7 +55,9 @@ class Main extends Component {
                             />
                         )
                     })}
+                    </MainLayout>
                 </Switch>
+                
             </BrowserRouter>
         );
     };

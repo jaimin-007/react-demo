@@ -4,6 +4,7 @@ import CustomerService from "../../common/services/CustomerService";
 import { Redirect, withRouter,NavLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Card, Col, Row,Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 
 class LoginForm extends React.Component {
@@ -57,6 +58,7 @@ class LoginForm extends React.Component {
         else if(response.data.length>0)
         {
             sessionStorage.setItem("UserId", response.data[0].Id)
+            sessionStorage.setItem("UserName", response.data[0].FirstName+" "+response.data[0].LastName)
             this.props.history.push('/company');
         }
           
@@ -70,78 +72,84 @@ class LoginForm extends React.Component {
     }
   
     componentDidMount() {
+      debugger;
+      if(sessionStorage.getItem('isForgotEmail')!=null && sessionStorage.getItem('isForgotEmail')!=undefined && sessionStorage.getItem('isForgotEmail')!=false && sessionStorage.getItem('isForgotEmail')!="false" )
+      {
+        toast.success("Forgot email send successfully.")
+        sessionStorage.setItem("isForgotEmail", false);
+      }
     }
     render() {
       return (
-        <div className="comp_details_outer detailPage detailPageBGColor">
-            
-          <div className="row gvs_vouch_lst m-b-50">
-            <div className="container-inner-width">
-              <div className="col-lg-12 text-center">
-                <h1 className="head_ttl"><i className="ti-gift giftVoucherIcon"></i> <span class="screenHeading">Login</span> </h1>
-                <span className="head_ttl_bor"><span className="lineBg"></span></span>
-                
-              </div>
-            </div>
-          </div>
-          <form onSubmit={(e) => this.UserLogin(e)}>
-            <div className="row m-t-50">
-              <div className="col-lg-12 text-center">
-                <span className="head_ttl_bor"><span className="lineBg"></span></span>
-              </div>
-            </div>
-            <div className="row m-t-20 m-b-50 vscd_form">
-              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <div id="focusEmailAddress" className="form-group">
-                <label className="control-label d-block text-center screenHeading">Email Address</label><hr className="w-50line page2borderColor" />
-                <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForUserId} ` }}  onChange={e => {
-                this.setState({
-                  UserId: e.target.value.trim()
-                });
-                }} id="yourname" name="yourname" placeholder="email address here" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" title="example@gmail.com" type="text" autoComplete="disable"></input>
-              </div>
-  
-              <div id="focusPassword" className="form-group">
-                <label className="control-label d-block text-center screenHeading">Password</label><hr className="w-50line page2borderColor" />
-                <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForPassword} ` }}  onChange={e => {
-                this.setState({
-                  Password: e.target.value.trim()
-                });
-              }} id="pwd" name="pwd" placeholder="password"  type="password" autoComplete="disable"></input>
-              </div>
-              </div>
-             
-              </div>
-              <div className="row m-t-10 m-b-50 px-3 xs-align-center">
-            <div className="col-lg-6 col-md-6 col-sm-4 col-xs-12 ">
-              <a onClick={this.props.history.goBack} className="btn btn-flat btn-preview-addcard pull-left buttonSettings"><i className="ti-angle-left"></i> BACK</a>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-              <button className="btn btn-flat btn-preview-addcard pull-right buttonSettings" onSubmit={(e) => this.UserLogin(e)}>
-                Login <i className="ti-angle-right"></i>
-              </button>
-            </div>
-          </div>
-          </form>
-          <div>
-              <button className="text-uppercase border-0 px-4 py-2 cursor" onClick={(e) => {
-                      this.gotoForgotPassword(e)
-                    }}>Forgot Password</button>
+        <Row
+        style={{
+          height: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Col md={6} lg={4}>
+          <Card body>
 
 
-              </div>
-              <ToastContainer
-          position="top-right"
-          autoClose={2500}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange={false}
-          draggable={false}
-          pauseOnHover
-        />
+          <Form onSubmit={(e) => this.UserLogin(e)}>
+        
+        <FormGroup>
+        <div id="focusEmailAddress">
+        <Label> Email</Label>
+                  <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForUserId} ` }}  onChange={e => {
+                  this.setState({
+                    UserId: e.target.value.trim()
+                  });
+                  }} id="yourname" name="yourname" placeholder="email address here" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" title="example@gmail.com" type="text" autoComplete="disable"></input>
+                </div>
+        </FormGroup>
+        <FormGroup>
+        <div id="focusPassword" className="form-group">
+        <Label> Password</Label>
+                  <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForPassword} ` }}  onChange={e => {
+                  this.setState({
+                    Password: e.target.value.trim()
+                  });
+                }} id="pwd" name="pwd" placeholder="password"  type="password" autoComplete="disable"></input>
+                </div>
+        </FormGroup>
+       
+        <hr />
+        <Button
+          size="lg"
+          className="bg-gradient-theme-left border-0"
+          block
+          onSubmit={(e) => this.UserLogin(e)}>
+          Login
+        </Button>
+
+        <div className="text-center pt-1">
+          <h6>
+              <a href="" onClick={(e) => {
+                this.gotoForgotPassword(e)
+              }}>
+                Forgot Password
+              </a>
+          </h6>
         </div>
+
+        
+      </Form>
+      <ToastContainer
+            position="top-right"
+            autoClose={2500}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange={false}
+            draggable={false}
+            pauseOnHover
+          />
+
+          </Card>
+        </Col>
+      </Row>
       );
     }
   }

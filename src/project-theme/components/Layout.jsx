@@ -5,6 +5,8 @@ import {
   // MdCardGiftcard,
   MdLoyalty,
 } from 'react-icons/md';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class Layout extends React.Component {
@@ -94,14 +96,19 @@ class Layout extends React.Component {
     const route = this.props.route;
     return (
       <main className="cr-app bg-light">
-        <Sidebar />
-        <Content fluid onClick={this.handleContentClick}>
-          <Header />
-          <Component route={route}  />
-          <Footer />
-        </Content>
-
        
+          <Component route={route}  />
+          <ToastContainer
+            position="top-right"
+            autoClose={2500}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange={false}
+            draggable={false}
+            pauseOnHover
+          />
       </main>
     
     );

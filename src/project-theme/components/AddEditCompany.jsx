@@ -3,6 +3,22 @@ import CustomerService from "../../common/services/CustomerService";
 import querystring from 'querystring';
 import { Redirect, withRouter,NavLink } from 'react-router-dom';
 import { tmpdir } from 'os';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Form,
+  FormFeedback,
+  FormGroup,
+  FormText,
+  Input,
+  Label,
+  Row,
+} from 'reactstrap';
 class AddEditCompanyData extends Component {
 
     constructor(props) {
@@ -64,7 +80,9 @@ class AddEditCompanyData extends Component {
        .then((response) => {
           if(response.data[0].Id>0)
           {
+            toast.success("Company update successfully.");  
               this.props.route.history.push('/company');
+              
           }
              
           });
@@ -75,6 +93,7 @@ class AddEditCompanyData extends Component {
           debugger;
              if(response.data.length>0)
              {
+              toast.success("Company add successfully.");  
               this.props.route.history.push('/company');
              }
           });
@@ -102,81 +121,93 @@ class AddEditCompanyData extends Component {
 
     render() {
         return (
-            <div className="comp_details_outer detailPage detailPageBGColor">
-              <div className="row gvs_vouch_lst m-b-50">
-                <div className="container-inner-width">
-                  <div className="col-lg-12 text-center">
-                    <h1 className="head_ttl"><i className="ti-gift giftVoucherIcon"></i> <span class="screenHeading">Company Add</span> </h1>
-                    <span className="head_ttl_bor"><span className="lineBg"></span></span>
-                    
-                  </div>
-                </div>
-              </div>              
-              <form onSubmit={(e) => this.CompanySave(e)}>
-                <div className="row m-t-20 m-b-50 vscd_form">
-                    {this.state.id?
+
+          
+          <Row className="col-12" >
+             <ToastContainer
+            position="top-right"
+            autoClose={2500}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange={false}
+            draggable={false}
+            pauseOnHover
+          />
+
+            <Col md="12" sm="12" xs="12">
+              <Card  className="mb-3">
+                <CardBody>
+                  <Form onSubmit={(e) => this.CompanySave(e)}>
+                  {this.state.id?
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <FormGroup>
                   
               <div id="focusCode" className="form-group">
-                <label className="control-label d-block text-center screenHeading">Company Code</label><hr className="w-50line page2borderColor" />
-                <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForCode} ` }}  
+                <Label for="yourname">Company Code</Label>
+                <Input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForCode} ` }}  
                 onChange={e => {
                     this.handleFieldChange("Code", e.target.value)
                   }}
-                value={this.state.getcode}  id="yourname" name="yourname" placeholder="Code here" type="text" autoComplete="disable"></input>
+                value={this.state.getcode}  id="yourname" name="yourname" placeholder="Code here" type="text" autoComplete="disable"></Input>
               </div>
-  
+              </FormGroup>
+              <FormGroup>
               <div id="focusName" className="form-group">
-                <label className="control-label d-block text-center screenHeading">Company Name</label><hr className="w-50line page2borderColor" />
+              <Label for="pwd">Company Name</Label>
                 <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForName} ` }} 
                 onChange={e => {
                     this.handleFieldChange("Name", e.target.value)
                   }}
                  value={this.state.getname} id="pwd" name="pwd" placeholder="Name here"  type="text" autoComplete="disable"></input>
               </div>
-              
+              </FormGroup>
 
               </div>
               :<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <FormGroup>
                   
               <div id="focusCode" className="form-group">
-                <label className="control-label d-block text-center screenHeading">Company Code</label><hr className="w-50line page2borderColor" />
-                <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForCode} ` }}  onChange={e => {
+              <Label for="yourname">Company Code</Label>
+                <Input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForCode} ` }}  onChange={e => {
                 this.setState({
-                  postcode: e.target.value.trim()
+                  getcode: e.target.value.trim()
                 });
-                }} id="yourname" name="yourname" placeholder="Code here" type="text" autoComplete="disable"></input>
+                }} id="yourname" name="yourname" placeholder="Code here" type="text" autoComplete="disable"></Input>
               </div>
+              </FormGroup>
+              <FormGroup>
   
               <div id="focusName" className="form-group">
-                <label className="control-label d-block text-center screenHeading">Company Name</label><hr className="w-50line page2borderColor" />
-                <input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForName} ` }}  onChange={e => {
+              <Label for="pwd">Company Name</Label>
+                <Input className="form-control text-box single-line" style={{ borderColor: `${this.state.errorForName} ` }}  onChange={e => {
                 this.setState({
-                  postname: e.target.value.trim()
+                  getname: e.target.value.trim()
                 });
-              }} id="pwd" name="pwd" placeholder="Name here"  type="text" autoComplete="disable"></input>
+              }} id="pwd" name="pwd" placeholder="Name here"  type="text" autoComplete="disable"></Input>
               </div>
-              
+              </FormGroup>
 
               </div>}
-             
-              </div>
-                  <div className="row m-t-10 m-b-50 px-3 xs-align-center">
-                <div className="col-lg-6 col-md-6 col-sm-4 col-xs-12 ">
-                  <a onClick={this.props.route.history.goBack} className="btn btn-flat btn-preview-addcard pull-left buttonSettings"><i className="ti-angle-left"></i> BACK</a>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                    {this.state.id?
-                  <button className="btn btn-flat btn-preview-addcard pull-right buttonSettings" onSubmit={(e) => this.CompanyEdit(e)}>
-                    Update <i className="ti-angle-right"></i>
-                  </button>
-    : <button className="btn btn-flat btn-preview-addcard pull-right buttonSettings" onSubmit={(e) => this.CompanySave(e)}>
-    Save <i className="ti-angle-right"></i>
-  </button>}
-                </div>
-              </div>
-              </form>
-            </div>
+
+              <hr />
+              <a href="#" style={{marginRight:'20px'}} onClick={this.props.route.history.goBack}>
+                Back
+              </a>
+              
+              {this.state.id?
+               <Button color="primary" onSubmit={(e) => this.CompanySave(e)}>Update</Button>
+
+                :
+                <Button color="primary" onSubmit={(e) => this.CompanySave(e)}>Save</Button>
+              }
+            
+                  </Form>
+                </CardBody>
+              </Card>
+              </Col>
+            </Row>
           );
       }
 }

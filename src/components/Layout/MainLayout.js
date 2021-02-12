@@ -7,7 +7,8 @@ import {
 } from 'react-icons/md';
 import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from '../../utils/constants';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class MainLayout extends React.Component {
   static isSidebarOpen() {
     return document
@@ -31,23 +32,23 @@ class MainLayout extends React.Component {
 
       this.notificationSystem.addNotification({
         title: <MdImportantDevices />,
-        message: 'Welome to Reduction Admin!',
+        message: 'Welcome '+sessionStorage.getItem('UserName'),
         level: 'info',
       });
     }, 1500);
 
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
+    // setTimeout(() => {
+    //   if (!this.notificationSystem) {
+    //     return;
+    //   }
 
-      this.notificationSystem.addNotification({
-        title: <MdLoyalty />,
-        message:
-          'Reduction is carefully designed template powered by React and Bootstrap4!',
-        level: 'info',
-      });
-    }, 2500);
+    //   this.notificationSystem.addNotification({
+    //     title: <MdLoyalty />,
+    //     message:
+    //       'Reduction is carefully designed template powered by React and Bootstrap4!',
+    //     level: 'info',
+    //   });
+    // }, 2500);
   }
 
   // close sidebar when
@@ -96,7 +97,17 @@ class MainLayout extends React.Component {
           {children}
           <Footer />
         </Content>
-
+        <ToastContainer
+            position="top-right"
+            autoClose={2500}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange={false}
+            draggable={false}
+            pauseOnHover
+          />
         <NotificationSystem
           dismissible={false}
           ref={notificationSystem =>

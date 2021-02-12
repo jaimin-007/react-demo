@@ -7,9 +7,11 @@ const LayoutRoute = ({ component: Component, layout: Layout, ...rest }) => (
     render={props => (
       <Layout>
         <Component {...props} />
+       
       </Layout>
     )}
   />
+  
 );
 
 export default LayoutRoute;
